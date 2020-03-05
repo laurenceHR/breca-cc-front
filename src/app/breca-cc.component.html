@@ -1,10 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<mat-grid-list cols="1" rowHeight="50px">
+  <mat-tab-group mat-align-tabs="center">
+      <mat-tab *ngFor="let item of venues">
+        <ng-template mat-tab-label>
+          <span (click)="selectVenue(item)" class="venue-label">{{item.name}}</span>
+        </ng-template>
+      </mat-tab>
+  </mat-tab-group>
+</mat-grid-list>
+<mat-grid-list cols="4" class="row-venue">
+  <mat-grid-tile class="col-tenants" [style.background]="'green'">
+    <mat-card *ngIf="venueSelected.id" class="card-tenants">
+      <mat-card-title>Tenants</mat-card-title>
+      <mat-card-content>
+        <mat-nav-list>
+          <a mat-list-item *ngFor="let t of tenants" (click)="selectTenant(t)" class="item-tenant" [class.active]="tenantSelected.id != null && t.tenant_id === tenantSelected.id">
+            <img [src]="'https://www.gravatar.com/avatar/' + t.tenant.brand + '?d=identicon'" height="30"/>
+            &nbsp;
+            <span>{{t.tenant.brand | slice : 0 : 8}}</span>
+            &nbsp;
+          </a>
+        </mat-nav-list>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="3">
+
+    <mat-grid-list cols="3" class="row-date" rowHeight="500">
+    <!--
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-label>Year</mat-label>
+          <mat-select [(value)]="yearSelected">
+            <mat-option *ngFor="let year of years" [value]="year" (change)="selectYear($event)">{{year}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-label>Month</mat-label>
+          <mat-select [(value)]="monthSelected">
+            <mat-option *ngFor="let month of yearMonths[yearSelected]" [value]="month">{{month}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+      </mat-grid-tile>
+      -->
+      <mat-grid-tile colspan="3" class="row-chart" *ngIf="years.length > 0">
+        <div [chart]="chart"></div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-grid-tile>
+</mat-grid-list>
