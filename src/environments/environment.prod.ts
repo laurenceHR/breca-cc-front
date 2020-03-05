@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  backend: 'http://breca-cc-back.daxes.net.pe',
 };
